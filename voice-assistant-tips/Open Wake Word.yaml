@@ -1,0 +1,67 @@
+name: gallant_matsumoto
+services:
+  gallant_matsumoto:
+    cpu_shares: 90
+    command:
+      - --preload-model
+      - hey_jarvis
+    deploy:
+      resources:
+        limits:
+          memory: 64093M
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    image: rhasspy/wyoming-openwakeword:latest
+    ports:
+      - target: 10400
+        published: "10400"
+        protocol: tcp
+    restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: PATH
+          description:
+            en_us: ""
+      image: ""
+      ports:
+        - container: "10400"
+          description:
+            en_us: ""
+    volumes: []
+    devices: []
+    cap_add: []
+    networks:
+      - gallant_matsumoto
+    privileged: false
+    container_name: ""
+    hostname: ""
+networks:
+  gallant_matsumoto:
+    name: gallant_matsumoto
+x-casaos:
+  architectures:
+    - amd64
+  author: CasaOS User
+  category: unknown
+  description:
+    en_us: ""
+  developer: unknown
+  hostname: ""
+  icon: ""
+  image: null
+  index: /
+  is_uncontrolled: false
+  main: gallant_matsumoto
+  port_map: ""
+  scheme: http
+  store_app_id: gallant_matsumoto
+  tagline:
+    en_us: This is a compose app converted from a legacy app (CasaOS v0.4.3 or
+      earlier)
+  thumbnail: ""
+  tips:
+    custom: This is a compose app converted from a legacy app (CasaOS v0.4.3 or
+      earlier)
+  title:
+    custom: ""
+    en_us: Open Wake Word

@@ -1,0 +1,99 @@
+name: linuxserver-piper
+services:
+  app:
+    cpu_shares: 90
+    command: []
+    deploy:
+      resources:
+        limits:
+          memory: 64093M
+    environment:
+      - PGID=1000
+      - PIPER_LENGTH=1.0
+      - PIPER_NOISE=0.667
+      - PIPER_NOISEW=0.333
+      - PIPER_PROCS=1
+      - PIPER_SPEAKER=0
+      - PIPER_VOICE=en_US-kristin-medium
+      - PUID=1000
+      - TZ=America/Chicago
+    image: linuxserver/piper:latest
+    labels:
+      icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/piper-logo.png
+    ports:
+      - target: 10200
+        published: "10200"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/piper/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: for UserID
+        - container: PGID
+          description:
+            en_us: for GroupID
+        - container: TZ
+          description:
+            en_us: specify a timezone to use, see this list.
+        - container: PIPER_VOICE
+          description:
+            en_us: The Piper voice to use, in the format --
+        - container: PIPER_LENGTH
+          description:
+            en_us: Voice speaking rate, 1.0 is default with  1.0 being slower.
+        - container: PIPER_NOISE
+          description:
+            en_us: Controls the variability of the voice by adding noise. Values above 1
+              will start to degrade audio.
+        - container: PIPER_NOISEW
+          description:
+            en_us: Controls the variability of speaking cadence. Values above 1 produce
+              extreme stutters and pauses.
+        - container: PIPER_SPEAKER
+          description:
+            en_us: Speaker number to use if the voice supports multiple speakers.
+        - container: PIPER_PROCS
+          description:
+            en_us: Number of Piper processes to run simultaneously.
+    devices: []
+    cap_add: []
+    networks:
+      - default
+    privileged: false
+    container_name: ""
+    hostname: ""
+networks:
+  default:
+    name: linuxserver-piper_default
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: WisdomSky
+  category: LinuxServer.io
+  description:
+    en_us: Piper is a fast, local neural text to speech system that sounds great and
+      is optimized for the Raspberry Pi 4. This container provides a Wyoming
+      protocol server for Piper.
+  developer: LinuxServer.io
+  hostname: ""
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/piper-logo.png
+  index: /
+  is_uncontrolled: false
+  main: app
+  port_map: ""
+  scheme: http
+  store_app_id: linuxserver-piper
+  tagline:
+    en_us: A fast, local neural text to speech system that sounds great and is
+      optimized for the Raspberry Pi 4. This container provides a Wyoming
+      protocol server for Piper.
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/piper-logo.png
+  title:
+    custom: ""
+    en_us: Piper
