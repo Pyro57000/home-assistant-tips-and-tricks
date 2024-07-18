@@ -1,0 +1,74 @@
+name: big-bear-faster-whisper
+services:
+  big-bear-faster-whisper:
+    cpu_shares: 90
+    command: []
+    container_name: big-bear-faster-whisper
+    deploy:
+      resources:
+        limits:
+          memory: 64093M
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=America/Chicago
+      - WHISPER_BEAM=1
+      - WHISPER_LANG=en
+      - WHISPER_MODEL=medium
+    hostname: big-bear-faster-whisper
+    image: linuxserver/faster-whisper:latest
+    labels:
+      icon: https://github.com/bigbeartechworld/big-bear-casaos/blob/master/Apps/faster-whisper/logo.png?raw=true
+    ports:
+      - mode: ingress
+        target: 10300
+        published: "10300"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/big-bear-faster-whisper/config
+        target: /config
+        bind:
+          create_host_path: true
+    x-casaos:
+      ports:
+        - container: "10300"
+          description:
+            en_us: "Container Port: 10300"
+      volumes:
+        - container: /config
+          description:
+            en_us: "Container Path: /config"
+    devices: []
+    cap_add: []
+    networks:
+      - big-bear-faster-whisper
+    privileged: false
+networks:
+  big-bear-faster-whisper:
+    name: big-bear-faster-whisper
+x-casaos:
+  architectures:
+    - amd64
+  author: BigBearTechWorld
+  category: BigBearCasaOS
+  description:
+    en_us: Faster-whisper is a reimplementation of OpenAI's Whisper model using
+      CTranslate2, which is a fast inference engine for Transformer models. This
+      container provides a Wyoming protocol server for faster-whisper.
+  developer: systran
+  hostname: ""
+  icon: https://github.com/bigbeartechworld/big-bear-casaos/blob/master/Apps/faster-whisper/logo.png?raw=true
+  index: /
+  is_uncontrolled: false
+  main: big-bear-faster-whisper
+  port_map: "10300"
+  scheme: http
+  store_app_id: big-bear-faster-whisper
+  tagline:
+    en_us: Faster-whisper
+  thumbnail: ""
+  title:
+    custom: ""
+    en_us: Faster-whisper
